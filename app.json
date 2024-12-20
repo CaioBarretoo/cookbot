@@ -4,14 +4,9 @@
     "slug": "CookBot",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon2.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "androidStatusBar": {
-      "backgroundColor": "#000000",
-      "translucent": true,
-      "barStyle": "light-content"
-    },
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
@@ -19,9 +14,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#18191A"
-      },
-      "package": "com.caiobarreto.CookBot"
+        "backgroundColor": "#ffffff"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -36,20 +30,12 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#18191A"
+          "backgroundColor": "#ffffff"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "ff0ac697-91ec-4aac-958c-d0b4b28f5f8a"
-      }
     }
   }
 }

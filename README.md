@@ -1,68 +1,60 @@
+<<<<<<< HEAD
 # CookBot 
 ![CookBot](assets/images/icon2.png)
 
+=======
+# Welcome to your Expo app 👋
+>>>>>>> parent of d5675db (App)
 
-Um aplicativo de geração de receitas usando IA para sugerir receitas baseadas nos ingredientes disponíveis.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Estrutura do Projeto
+## Get started
 
-```
-src/
-├── App.tsx                # Componente principal do aplicativo
-├── screens/              # Telas do aplicativo
-│   └── HomeScreen.tsx    # Tela principal
-├── components/           # Componentes reutilizáveis
-├── contexts/             # Contextos React
-│   └── ThemeContext.tsx  # Gerenciamento de tema
-├── services/             # Serviços externos
-│   └── ai/
-│       └── generator.ts  # Serviço de IA para geração de receitas
-├── theme/                # Estilos e temas
-│   ├── styles.ts        # Estilos globais
-│   └── theme.ts         # Configuração de temas (light/dark)
-├── config/               # Configurações
-│   └── constants.ts     # Constantes globais
-├── hooks/               # Hooks personalizados
-└── utils/               # Utilitários e helpers
-```
+1. Install dependencies
 
-## Funcionalidades
+   ```bash
+   npm install
+   ```
 
-- Geração de receitas baseada em ingredientes disponíveis
-- Suporte a tema claro/escuro com persistência
-- Interface moderna e responsiva
-- Animações suaves
-- Integração com OpenAI GPT-3.5
+2. Start the app
 
-## Tecnologias
+   ```bash
+    npx expo start
+   ```
 
-- React Native
-- Expo
-- TypeScript
-- OpenAI API
-- AsyncStorage para persistência
-- Moti para animações
+In the output, you'll find options to open the app in a
 
-## Como executar
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-1. Clone o repositório
-2. Instale as dependências:
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
 ```bash
-npm install
+npm run reset-project
 ```
 
-3. Configure as variáveis de ambiente:
-- Crie um arquivo `.env` na raiz do projeto
-- Adicione sua chave da API OpenAI:
-```
-EXPO_PUBLIC_OPENAI_API_KEY=sua_chave_aqui
-```
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-4. Execute o projeto:
-```bash
-npm start
-```
+## Learn more
 
-## Estrutura de Temas
+To learn more about developing your project with Expo, look at the following resources:
 
+<<<<<<< HEAD
 O aplicativo suporta temas claro e escuro, com persistência da preferência do usuário. A configuração de temas está localizada em `src/theme/theme.ts`.
+=======
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+>>>>>>> parent of d5675db (App)
