@@ -1,4 +1,6 @@
-# CookBot
+# CookBot 
+![CookBot](assets/images/icon2.png)
+
 
 Um aplicativo de geração de receitas usando IA para sugerir receitas baseadas nos ingredientes disponíveis.
 
@@ -64,11 +66,3 @@ npm start
 ## Estrutura de Temas
 
 O aplicativo suporta temas claro e escuro, com persistência da preferência do usuário. A configuração de temas está localizada em `src/theme/theme.ts`.
-
-## Contribuindo
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
