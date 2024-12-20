@@ -1,3 +1,10 @@
+/**
+ * CookBot - Aplicativo de Geração de Receitas
+ * 
+ * Este aplicativo permite aos usuários gerarem receitas baseadas nos 
+ * ingredientes disponíveis em sua geladeira.
+ */
+
 import {generatorRecipe} from "../services/ai/generator"
 import styles from "../styles";
 import {useState} from "react";
@@ -6,12 +13,21 @@ import {MotiView} from 'moti';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 
+/**
+ * Componente principal do aplicativo
+ * Gerencia o estado e a lógica principal da aplicação
+ */
 function MainApp() {
-  const [recipe, setRecipe] = useState("")
-  const [response, setResponse] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const { theme, isDark, toggleTheme } = useTheme();
+  /* Estados para controle da aplicação */
+  const [recipe, setRecipe] = useState("") // Armazena os ingredientes inseridos
+  const [response, setResponse] = useState("") // Armazena a receita gerada
+  const [isLoading, setIsLoading] = useState(false) // Controla o estado de carregamento
+  const { theme, isDark, toggleTheme } = useTheme(); // Gerenciamento do tema
 
+  /**
+   * Função responsável por gerar a receita
+   * Valida os ingredientes e faz a chamada à API
+   */
   const generateRecipe = async () => {
     if(recipe.length < 2){
       alert("Desculpe, os ingredientes precisa ter mais de 2 caracteres")
@@ -104,6 +120,10 @@ function MainApp() {
   );
 }
 
+/**
+ * Componente que encapsula o conteúdo do app
+ * Responsável por gerenciar a StatusBar e o tema
+ */
 function AppContent() {
   const { isDark, theme } = useTheme();
   return (
@@ -117,6 +137,10 @@ function AppContent() {
   );
 }
 
+/**
+ * Componente raiz da aplicação
+ * Inicializa o provedor de tema
+ */
 export default function App() {
   return (
     <ThemeProvider>

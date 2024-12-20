@@ -1,10 +1,24 @@
 
+/**
+ * Módulo de Geração de Receitas
+ * 
+ * Este módulo utiliza a API Groq para gerar receitas baseadas nos
+ * ingredientes fornecidos pelo usuário.
+ */
+
 const Groq = require('groq-sdk');
 
+/* Inicialização do cliente Groq com a chave da API */
 const groq = new Groq({apiKey: process.env.EXPO_PUBLIC_GROQ_KEY, dangerouslyAllowBrowser: true});
 
+/**
+ * Gera receitas baseadas nos ingredientes fornecidos
+ * @param recipe - String contendo os ingredientes disponíveis
+ * @returns Promise<string> - Retorna as receitas geradas ou uma mensagem de erro criativa
+ */
 export async function generatorRecipe(recipe: string) {
     try {
+        /* Faz a requisição para a API do Groq com o contexto e os ingredientes */
         const chatCompletion = await groq.chat.completions.create({
             "messages": [
                 {
@@ -41,9 +55,10 @@ export async function generatorRecipe(recipe: string) {
             "max_tokens": 1024,
             "top_p": 1,
         });
+        /* Retorna o conteúdo da primeira resposta gerada */
         return chatCompletion.choices[0]?.message?.content;
     } catch (error) {
-
+        /* Em caso de erro, retorna uma mensagem criativa aleatória */
         const desculpas = [
             "Poxa, justo hoje meu hamster ficou doente...",
             "Sabe o que é... Um alienígena sequestrou meu celular!",
