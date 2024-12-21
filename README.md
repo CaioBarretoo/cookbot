@@ -1,6 +1,4 @@
 # CookBot 
-![CookBot](assets/images/icon.png)
-
 
 Um aplicativo de geração de receitas usando IA para sugerir receitas baseadas nos ingredientes disponíveis.
 
