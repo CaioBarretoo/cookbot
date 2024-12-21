@@ -1,150 +1,136 @@
 /**
- * CookBot - Aplicativo de Geração de Receitas
- * 
- * Este aplicativo permite aos usuários gerarem receitas baseadas nos 
- * ingredientes disponíveis em sua geladeira.
+ * Importação das dependências necessárias
  */
-
-import {generatorRecipe} from "../services/ai/generator"
 import styles from "../styles";
 import {useState} from "react";
-import {Text, TextInput, TouchableOpacity, View, ScrollView, StatusBar} from "react-native";
+import {Text, TextInput, TouchableOpacity, View, ScrollView, ActivityIndicator} from "react-native";
 import {MotiView} from 'moti';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
+import { generatorRecipe } from '../services/ai/generator';
 
 /**
  * Componente principal do aplicativo
- * Gerencia o estado e a lógica principal da aplicação
  */
 function MainApp() {
-  /* Estados para controle da aplicação */
-  const [recipe, setRecipe] = useState("") // Armazena os ingredientes inseridos
-  const [response, setResponse] = useState("") // Armazena a receita gerada
-  const [isLoading, setIsLoading] = useState(false) // Controla o estado de carregamento
-  const { theme, isDark, toggleTheme } = useTheme(); // Gerenciamento do tema
+  const [recipe, setRecipe] = useState("")
+  const [response, setResponse] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const { theme, isDark, toggleTheme } = useTheme();
 
   /**
-   * Função responsável por gerar a receita
-   * Valida os ingredientes e faz a chamada à API
+   * Função para gerar uma nova receita
    */
   const generateRecipe = async () => {
-    if(recipe.length < 2){
-      alert("Desculpe, os ingredientes precisa ter mais de 2 caracteres")
-      return
-    }
+    try {
+      if(recipe.length < 2){
+        alert("Desculpe, os ingredientes precisam ter mais de 2 caracteres")
+        return;
+      }
 
-    setIsLoading(true)
-    setRecipe("")
-    setResponse("")
-
-    try{
+      setIsLoading(true);
       const result = await generatorRecipe(recipe);
-      setResponse(result)
-    }catch(error){
-      alert(error)
-    }finally{
-      setIsLoading(false)
+      if (result) {
+        setResponse(result);
+      }
+    } catch (error) {
+      console.error('Erro ao gerar receita:', error);
+      alert('Ocorreu um erro ao gerar a receita. Por favor, tente novamente.');
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <View style={styles.headerContainer}>
-        <Text style={[styles.title, { color: theme.titleColor }]}>CookBot</Text>
+      {/* Cabeçalho com título e botão de tema */}
+      <MotiView 
+        style={styles.headerContainer}
+        from={{ opacity: 0, translateY: -20 }}
+        animate={{ opacity: 1, translateY: 0 }}
+      >
+        <Text style={[styles.title, { color: theme.primary }]}>CookBot</Text>
         <TouchableOpacity 
           onPress={toggleTheme} 
-          style={[
-            styles.themeToggle,
-            { backgroundColor: theme.iconBackground }
-          ]}
+          style={[styles.themeToggle, { backgroundColor: theme.iconBackground }]}
         >
           <Ionicons 
             name={isDark ? 'sunny' : 'moon'} 
             size={24} 
-            color={isDark ? '#FFD700' : '#1E90FF'}
+            color={theme.text} 
           />
-        </TouchableOpacity>
-      </View>
-      <Text style={[styles.subtitle, { color: theme.subtitle }]}>O Gerador de Receitas</Text>
-      <Text style={[styles.subtitle, { color: theme.subtitle }]}>O que tem de bom na sua geladeira? 🤤😋</Text>
-
-      <TextInput
-        onChangeText={setRecipe}
-        value={recipe}
-        style={[styles.input, { 
-          backgroundColor: theme.cardBackground,
-          color: theme.text,
-          borderColor: theme.border
-        }]}
-        placeholder="Arroz, carne de boi, macarrão, leite condensado..."
-        placeholderTextColor={theme.placeholder}
-      />
-
-      <MotiView
-        from={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ type: 'timing', duration: 500 }}
-      >
-        <TouchableOpacity 
-          style={[styles.button, { backgroundColor: theme.primary }]} 
-          onPress={generateRecipe}
-        >
-          <Text style={styles.buttonText}>
-            {isLoading ? "Preparando sua receita..." : "Gerar Receitas 👨‍🍳"}
-          </Text>
         </TouchableOpacity>
       </MotiView>
 
-    {response ? (
-      <ScrollView style={{marginTop: 20, width: '100%'}}>
-        <MotiView 
-          style={[styles.card, { 
+      {/* Subtítulos */}
+      <MotiView
+        from={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+      >
+        <Text style={[styles.subtitle, { color: theme.text }]}>
+          O Gerador de Receitas Inteligente
+        </Text>
+        <Text style={[styles.subtitle, { color: theme.text }]}>
+          O que tem de bom na sua geladeira? 🤤😋
+        </Text>
+      </MotiView>
+
+      {/* Campo de entrada e botão */}
+      <MotiView
+        from={{ opacity: 0, translateX: -50 }}
+        animate={{ opacity: 1, translateX: 0 }}
+        style={{ width: '100%' }}
+      >
+        <TextInput
+          onChangeText={setRecipe}
+          value={recipe}
+          style={[styles.input, { 
             backgroundColor: theme.cardBackground,
-            borderColor: theme.border 
+            color: theme.text,
+            borderColor: theme.border
           }]}
-          from={{opacity: 0, translateY: 50, scale: 0.9}}
-          animate={{opacity: 1, translateY: 0, scale: 1}}
-          transition={{
-            type: 'spring',
-            damping: 15,
-            stiffness: 200
-          }}
+          placeholder="Arroz, carne de boi, macarrão, leite condensado..."
+          placeholderTextColor={theme.placeholder}
+        />
+
+        <TouchableOpacity 
+          style={[styles.button, { backgroundColor: theme.primary }]} 
+          onPress={generateRecipe}
+          disabled={isLoading}
         >
-          <Text style={[styles.cardTitle, { color: theme.text }]}>Sua receita está pronta:</Text>
-          <Text style={[styles.cardText, { color: theme.subtitle }]}>{response}</Text>
-        </MotiView>
-      </ScrollView>
-    ) : null}
+          {isLoading ? (
+            <ActivityIndicator color="#FFFFFF" />
+          ) : (
+            <Text style={styles.buttonText}>Gerar Receitas 🧑‍🍳</Text>
+          )}
+        </TouchableOpacity>
+      </MotiView>
+
+      {/* Card da receita gerada */}
+      {response && (
+        <ScrollView style={{ width: '100%', marginTop: 20 }}>
+          <MotiView 
+            style={[styles.card, { backgroundColor: theme.cardBackground }]}
+            from={{ opacity: 0, translateY: 50 }}
+            animate={{ opacity: 1, translateY: 0 }}
+          >
+            <Text style={[styles.cardTitle, { color: theme.primary }]}>
+              Sua receita está pronta:
+            </Text>
+            <Text style={[styles.cardText, { color: theme.text }]}>
+              {response}
+            </Text>
+          </MotiView>
+        </ScrollView>
+      )}
     </View>
   );
 }
 
-/**
- * Componente que encapsula o conteúdo do app
- * Responsável por gerenciar a StatusBar e o tema
- */
-function AppContent() {
-  const { isDark, theme } = useTheme();
-  return (
-    <View style={{ flex: 1, backgroundColor: theme.background }}>
-      <StatusBar 
-        backgroundColor={theme.background}
-        barStyle={isDark ? "light-content" : "dark-content"}
-      />
-      <MainApp />
-    </View>
-  );
-}
-
-/**
- * Componente raiz da aplicação
- * Inicializa o provedor de tema
- */
 export default function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <MainApp />
     </ThemeProvider>
   );
 }

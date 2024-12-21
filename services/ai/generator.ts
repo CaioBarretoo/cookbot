@@ -6,10 +6,20 @@
  * ingredientes fornecidos pelo usuário.
  */
 
-const Groq = require('groq-sdk');
+import Groq from 'groq-sdk';
+import Constants from 'expo-constants';
 
 /* Inicialização do cliente Groq com a chave da API */
-const groq = new Groq({apiKey: process.env.EXPO_PUBLIC_GROQ_KEY, dangerouslyAllowBrowser: true});
+const GROQ_API_KEY = Constants.expoConfig?.extra?.EXPO_PUBLIC_GROQ_KEY || process.env.EXPO_PUBLIC_GROQ_KEY;
+
+if (!GROQ_API_KEY) {
+    console.error('GROQ API Key não encontrada. Verifique se a variável EXPO_PUBLIC_GROQ_KEY está definida no .env');
+}
+
+const groq = new Groq({
+    apiKey: GROQ_API_KEY,
+    dangerouslyAllowBrowser: true
+});
 
 /**
  * Gera receitas baseadas nos ingredientes fornecidos
@@ -17,6 +27,7 @@ const groq = new Groq({apiKey: process.env.EXPO_PUBLIC_GROQ_KEY, dangerouslyAllo
  * @returns Promise<string> - Retorna as receitas geradas ou uma mensagem de erro criativa
  */
 export async function generatorRecipe(recipe: string) {
+    console.log('Iniciando geração de receita com ingredientes:', recipe);
     try {
         /* Faz a requisição para a API do Groq com o contexto e os ingredientes */
         const chatCompletion = await groq.chat.completions.create({
